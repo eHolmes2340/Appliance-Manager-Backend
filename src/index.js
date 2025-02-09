@@ -48,6 +48,44 @@ app.post('/usersInformation', (req, res) => {
 });
 
 
+app.post('/userProfileInformation', (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  const query = `SELECT * FROM usersinformation WHERE email = ?`;
+
+  db.db.query(query, [email], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      return res.status(500).json({ error: "Error retrieving user information" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    console.log('User information retrieved successfully');
+
+    // Convert database fields to match Flutter's expectations
+    const userInfo = {
+      firstName: results[0].firstName,
+      lastName: results[0].lastName,
+      email: results[0].email,
+      postalCode: results[0].postalCode,
+      country: results[0].country,
+      freeAccount: Boolean(results[0].freeAccount), // Convert to boolean
+      accountVerified: Boolean(results[0].accountVerified) // Convert to boolean
+    };
+
+    res.status(200).json(userInfo);
+  });
+});
+
+
+
 
 
 // Graceful shutdown function
