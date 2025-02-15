@@ -1,3 +1,6 @@
 
 # Ignore all .sh files in the in the scripts directory
 scripts/*.sh
+
+# Ignore all .txt files in the project root
+.env
