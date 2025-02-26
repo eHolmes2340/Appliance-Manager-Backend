@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import db from './model/db.js'; // Import the db variable
 import userRoutes from './routes/userRoutes.js'; // Import user routes
 import applianceRoutes from './routes/applianceRoutes.js'; // Import appliance routes
+import health from './routes/health.js'; // Import health routes
 
 dotenv.config(); // Load environment variables from a .env file into process.env
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 // Use the imported routes
 app.use('/api', userRoutes);
 app.use('/api', applianceRoutes);
+app.use('/api',health);
 
 const server = app.listen(PORT, '10.0.0.105', () => {
   console.log(`Server running on http://10.0.0.105:${PORT}`);
