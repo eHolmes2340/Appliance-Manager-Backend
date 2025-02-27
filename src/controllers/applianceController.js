@@ -113,3 +113,33 @@ export const updateApplianceInformation = (req, res) => {
 };
 
 
+//Function  :deleteApplianceInformation
+//Description:Function to delete appliance information
+export const deleteApplianceInformation = (req, res) => {
+  const { userId, applianceName, applianceType, brand, model } = req.body;
+
+  if (!userId || !applianceName || !applianceType || !brand || !model) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  const query = `
+    DELETE FROM userAppliances
+    WHERE userId = ? AND applianceName = ? AND applianceType = ? AND brand = ? AND model = ?
+  `;
+
+  db.db.query(query, [userId, applianceName, applianceType, brand, model], (err, result) => {
+    if (err) {
+      console.error("Error deleting appliance:", err);
+      return res.status(500).json({ error: "Database deletion failed" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Appliance not found" });
+    }
+
+    return res.status(200).json({ message: "Appliance deleted successfully" });
+  });
+};
+
+
+
