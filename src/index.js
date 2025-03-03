@@ -11,7 +11,7 @@ import health from './routes/health.js'; // Import health routes
 dotenv.config(); // Load environment variables from a .env file into process.env
 
 const app = express();
-const PORT = 3000; // Localhost
+const PORT = 8080; // Localhost
 
 app.use(cors());
 app.use(bodyParser.json());
