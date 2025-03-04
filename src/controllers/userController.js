@@ -4,7 +4,7 @@ import db from '../model/db.js';
 // Save user information
 export const saveUserInformation = (req, res) => {
   const { firstName, lastName, email, postalCode, country, freeAccount, accountVerified } = req.body;
-  const query = 'INSERT INTO usersinformation (firstName, lastName, email, postalCode, country, freeAccount, accountVerified) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  const query = 'INSERT INTO usersInformation (firstName, lastName, email, postalCode, country, freeAccount, accountVerified) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
   db.db.query(query, [firstName, lastName, email, postalCode, country, freeAccount, accountVerified], (err, result) => {
     if (err) {
@@ -26,7 +26,7 @@ export const getUserProfileInformation = (req, res) => {
     return res.status(400).json({ error: "Email is required" });
   }
 
-  const query = `SELECT * FROM usersinformation WHERE email = ?`;
+  const query = `SELECT * FROM usersInformation WHERE email = ?`;
 
   db.db.query(query, [email], (err, results) => {
     if (err) {
