@@ -8,10 +8,19 @@ import userRoutes from './routes/userRoutes.js'; // Import user routes
 import applianceRoutes from './routes/applianceRoutes.js'; // Import appliance routes
 import health from './routes/health.js'; // Import health routes
 
+//Local host
+// LOCAL_HOST= http://10.0.0.105
+// PORT_NUMBER=3000
+
+
+//This is for cloud 
+//Port number = 8080 
+//Local host = 0.0.0.0
+
 dotenv.config(); // Load environment variables from a .env file into process.env
 
 const app = express();
-const PORT = 8080; // Localhost
+const PORT = 3000; // Localhost
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -21,7 +30,7 @@ app.use('/api', userRoutes);
 app.use('/api', applianceRoutes);
 app.use('/api',health);
 
-const server = app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '10.0.0.105', () => {
   console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
 
