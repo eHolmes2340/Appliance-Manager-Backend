@@ -3,4 +3,3 @@
 scripts/*.sh
 
 # Ignore all .txt files in the project root
-.env
