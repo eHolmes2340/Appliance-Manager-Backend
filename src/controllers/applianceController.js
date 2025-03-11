@@ -51,7 +51,7 @@ export const listApplianceInformation = (req, res) => {
     return res.status(400).json({ error: "User ID is required" });
   }
   const query = 'SELECT * FROM userAppliances WHERE userId = ?';
-  db.query(query, [userId], (err, result) => {
+  db.db.query(query, [userId], (err, result) => {
     if(err)
     {
       console.error('Error fetching appliance data:', err);
@@ -101,7 +101,7 @@ export const updateApplianceInformation = (req, res) => {
   ];
 
   // Execute the query
-  db.query(query, values, (err, result) => {
+  db.db.query(query, values, (err, result) => {
     if (err) {
       console.error("Error updating appliance information:", err);
       return res.status(500).json({ error: "Database update failed" });
@@ -130,7 +130,7 @@ export const deleteApplianceInformation = (req, res) => {
     WHERE userId = ? AND applianceName = ? AND applianceType = ? AND brand = ? AND model = ?
   `;
 
-  db.query(query, [userId, applianceName, applianceType, brand, model], (err, result) => {
+  db.db.query(query, [userId, applianceName, applianceType, brand, model], (err, result) => {
     if (err) {
       console.error("Error deleting appliance:", err);
       return res.status(500).json({ error: "Database deletion failed" });
