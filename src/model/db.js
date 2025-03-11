@@ -10,8 +10,10 @@ const db = mysql.createPool({
     database: process.env.MYSQL_DB       
 });
 
+// Using the promise API for async/await support
+const dbPromise = db.promise();
 
-// Check and see if the connection is successful 
+// Check and see if the connection is successful
 db.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting: ' + err.stack);
@@ -20,5 +22,5 @@ db.getConnection((err, connection) => {
   console.log('Connected as id ' + connection.threadId);
 });
 
-
-export default { db};
+// Export the Promise-based db connection
+export default dbPromise;

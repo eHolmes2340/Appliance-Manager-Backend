@@ -2,7 +2,7 @@
 import db from '../model/db.js';
 
 export const addApplianceInformation = (req, res) => {
-  const { userId, applianceName, applianceType, brand, model, warrantyExpirationDate, applianceImageURL } = req.body;
+  const { userId, applianceName, applianceType, brand, model, warrantyExpirationDate, applianceImageURL,manualURL } = req.body;
 
   if (!userId) {
     return res.status(400).json({ error: "User ID is required" });
@@ -15,29 +15,31 @@ export const addApplianceInformation = (req, res) => {
   const applianceImage = applianceImageURL || null;
 
   const query = `
-    INSERT INTO userAppliances (userId, applianceName, applianceType, brand, model, warrantyExpirationDate, applianceImageURL)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `;
+  INSERT INTO userAppliances (userId, applianceName, applianceType, brand, model, warrantyExpirationDate, applianceImageURL, manualURL)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+`;
 
-  db.db.query(query, [
-    userId,
-    applianceName,
-    applianceTypeValue,
-    brandValue,
-    modelValue,
-    warrantyExpirationDateValue,
-    applianceImage
-  ], (err, result) => {
-    if (err) {
-      console.error('Error inserting appliance data:', err);
-      return res.status(500).json({ message: 'Error inserting appliance data' });
-    }
+db.db.query(query, [
+  userId,
+  applianceName,
+  applianceTypeValue,
+  brandValue,
+  modelValue,
+  warrantyExpirationDateValue,
+  applianceImage,
+  manualURL || null  // Ensure manualURL is always passed
+], (err, result) => {
+  if (err) {
+    console.error('Error inserting appliance data:', err);
+    return res.status(500).json({ message: 'Error inserting appliance data' });
+  }
 
     return res.status(201).json({
       message: 'Appliance added successfully',
       applianceId: result.insertId
     });
   });
+
 };
 
 
@@ -79,7 +81,7 @@ export const updateApplianceInformation = (req, res) => {
   // Construct the update query
   const query = `
     UPDATE userAppliances 
-    SET applianceName = ?, applianceType = ?, brand = ?, model = ?, warrantyExpirationDate = ?, applianceImageURL = ?
+    SET applianceName = ?, applianceType = ?, brand = ?, model = ?, warrantyExpirationDate = ?, applianceImageURL = ?, manualURL = ?
     WHERE userId = ? AND applianceName = ? AND applianceType = ? AND brand = ? AND model = ?
   `;
 
@@ -90,6 +92,7 @@ export const updateApplianceInformation = (req, res) => {
     newApplianceInformation.model,
     warrantyExpirationDate,  // This should be null if the date is empty
     newApplianceInformation.applianceImageURL,
+    newApplianceInformation.manualURL,
     userID, 
     oldApplianceInformation.applianceName, 
     oldApplianceInformation.applianceType,
