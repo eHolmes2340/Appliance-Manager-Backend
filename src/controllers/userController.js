@@ -6,7 +6,7 @@ export const saveUserInformation = (req, res) => {
   const { firstName, lastName, email, postalCode, country, freeAccount, accountVerified } = req.body;
   const query = 'INSERT INTO usersInformation (firstName, lastName, email, postalCode, country, freeAccount, accountVerified) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-  db.db.query(query, [firstName, lastName, email, postalCode, country, freeAccount, accountVerified], (err, result) => {
+  db.query(query, [firstName, lastName, email, postalCode, country, freeAccount, accountVerified], (err, result) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error saving user information');

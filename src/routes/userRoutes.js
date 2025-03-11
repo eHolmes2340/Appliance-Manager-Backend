@@ -4,6 +4,7 @@ import { saveUserInformation, getUserProfileInformation } from '../controllers/u
 
 const router = express.Router();
 
+
 // POST endpoint to save user information
 router.post('/usersInformation', saveUserInformation);
 

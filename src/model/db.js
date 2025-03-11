@@ -11,6 +11,8 @@ const db = mysql.createPool({
 });
 
 
+
+
 // Check and see if the connection is successful 
 db.getConnection((err, connection) => {
   if (err) {
