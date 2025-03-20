@@ -1,4 +1,8 @@
-// routes/applianceRoutes.js
+//File       : routes/applianceRoutes.js
+//Programmer : Erik Holmes 
+//Date       : Feb 20, 2025
+//Description: This file will handle all the routes for the appliance information.
+
 import express from 'express';
 import { addApplianceInformation,listApplianceInformation,updateApplianceInformation,deleteApplianceInformation } from '../controllers/applianceController.js';
 

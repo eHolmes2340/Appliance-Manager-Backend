@@ -1,4 +1,7 @@
-// controllers/userController.js
+//File       : userController.js
+//Programmer : Erik Holmes
+//Date       : Feb 1, 2025
+//Description: This file will handle all the user information.
 import db from '../model/db.js';
 
 // Save user information
@@ -51,5 +54,36 @@ export const getUserProfileInformation = (req, res) => {
 
     console.log('User information:', userInfo.email);
     res.status(200).json(userInfo);
+  });
+};
+
+
+
+// Function    : updateUserProfile
+// Description : Updates user profile information by ID.
+export const updateUserProfile = (req, res) => {
+  const { id, firstName, lastName, postalCode, country, freeAccount, accountVerified } = req.body;
+
+  if (!id) {
+      return res.status(400).json({ error: "User ID is required" });
+  }
+
+  const updateQuery = `
+      UPDATE usersInformation
+      SET firstName = ?, lastName = ?, postalCode = ?, country = ?, freeAccount = ?, accountVerified = ?
+      WHERE id = ?;
+  `;
+
+ db.db.query(updateQuery, [firstName, lastName, postalCode, country, freeAccount, accountVerified,id], (error, result) => {
+      if (error) {
+          console.error("Error updating user profile:", error);
+          return res.status(500).json({ error: "Internal Server Error" });
+      }
+
+      if (result.affectedRows > 0) {
+          return res.status(200).json({ message: "Profile updated successfully" });
+      } else {
+          return res.status(404).json({ error: "User not found" });
+      }
   });
 };

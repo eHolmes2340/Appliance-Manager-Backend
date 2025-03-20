@@ -18,19 +18,6 @@ else
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
     sudo apt-get install -y nodejs || sudo yum install -y nodejs
 fi
-
-#install python 
-if command -v python3 > /dev/null; then
-    echo "Python is already installed"
-else
-    echo "Python is not installed"
-    sudo apt-get install -y python3 || sudo yum install -y python3-pip
-fi
-
-
 echo "Node version" 
-node -v 
-python3 --version
-
 echo "All dependencies are installed successfully"
 

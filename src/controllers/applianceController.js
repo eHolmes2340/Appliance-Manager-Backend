@@ -1,6 +1,13 @@
-// controllers/applianceController.js
+// File name  : applianceController.js
+// Programmer : Erik Holmes
+// Date       : Feb 4, 2025
+// Description: This file will handle all the appliance information.
+// Import the database connection
+
 import db from '../model/db.js';
 
+//Function    :addApplianceInformation
+//Description :Function to add appliance information
 export const addApplianceInformation = (req, res) => {
   const { userId, applianceName, applianceType, brand, model, warrantyExpirationDate, applianceImageURL,manualURL } = req.body;
 
@@ -19,7 +26,7 @@ export const addApplianceInformation = (req, res) => {
   VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 `;
 
-db.query(query, [
+db.db.query(query, [
   userId,
   applianceName,
   applianceTypeValue,
@@ -63,7 +70,7 @@ export const listApplianceInformation = (req, res) => {
 
 
 //Function   :updateApplianceInformation
-//Description;Function to update appliance information
+//Description:Function to update appliance information
 export const updateApplianceInformation = (req, res) => {
   const { userID, oldApplianceInformation, newApplianceInformation } = req.body;
 
@@ -143,6 +150,3 @@ export const deleteApplianceInformation = (req, res) => {
     return res.status(200).json({ message: "Appliance deleted successfully" });
   });
 };
-
-
-

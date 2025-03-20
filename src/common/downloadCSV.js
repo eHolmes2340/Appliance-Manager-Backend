@@ -27,7 +27,7 @@ export async function startDownload() {
 
         writer.on('finish', async () => {
             console.log('CSV file downloaded successfully.');
-            await checkAndCreateTable();
+            await populateTable(); // Directly call populateTable since table should already exist
         });
 
         writer.on('error', (err) => {
@@ -37,60 +37,6 @@ export async function startDownload() {
     } catch (error) {
         console.error('Error downloading CSV:', error);
     }
-}
-
-//Fuction       : checkAndCreateTable
-//Arguments     : None
-//Description   : This function checks if the table exists in the database and creates it if it does not.
-async function checkAndCreateTable() {
-    const connection = db.db;
-
-    // Query to check if the table exists
-    const checkTableQuery = `SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = ? AND table_name = 'recalls'`;
-
-    connection.query(checkTableQuery, [process.env.MYSQL_DB], (err, results) => {
-        if (err) {
-            console.error('Error checking table existence:', err);
-            return;
-        }
-
-        if (results[0].count === 0) {
-            console.log('Table "recalls" does not exist. Creating table and populating...');
-            createTable();
-        } else {
-            console.log('Table "recalls" already exists. Skipping population...');
-        }
-    });
-}
-
-//Function      : createTable
-//Arguments     : None
-//Description   : This function creates the table in the database.
-async function createTable() {
-    const connection = db.db;
-
-    // Create the recalls table
-    const createTableQuery = `
-        CREATE TABLE recalls (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            recall_date VARCHAR(50),
-            safety_warning_date VARCHAR(50),
-            recall_heading TEXT,
-            product_name TEXT,
-            description TEXT,
-            hazard_description TEXT,
-            consumer_action TEXT
-        );
-    `;
-
-    connection.query(createTableQuery, (err, result) => {
-        if (err) {
-            console.error('Error creating table:', err);
-        } else {
-            console.log('Table "recalls" created successfully.');
-            populateTable();
-        }
-    });
 }
 
 //Function      : populateTable
