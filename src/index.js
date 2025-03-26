@@ -25,7 +25,7 @@ startDownload();
 const app = express();
 //Google cloud
 // const PORT = 8080; // Localhost
-// const googleIPAddress='0.0.0.0'
+//const localhost='0.0.0.0'
 
 //Network IP
 //Home
@@ -33,12 +33,13 @@ const localhost='10.0.0.215';
 
 
 //Dads house 
-//const localhost='10.0.0.249'; 
+//const localhost='0.0.0.0'; 
 
 //Conenstoga college IP 
 // const localhost='10.144.120.196'; 
 
-const PORT=3000
+const PORT=3000;
+
 app.use(cors());
 app.use(bodyParser.json());
 

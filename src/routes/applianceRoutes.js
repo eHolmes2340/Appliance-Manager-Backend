@@ -4,7 +4,7 @@
 //Description: This file will handle all the routes for the appliance information.
 
 import express from 'express';
-import { addApplianceInformation,listApplianceInformation,updateApplianceInformation,deleteApplianceInformation } from '../controllers/applianceController.js';
+import { addApplianceInformation,listApplianceInformation,updateApplianceInformation,deleteApplianceInformation,saveManual } from '../controllers/applianceController.js';
 
 const router = express.Router();
 
@@ -13,5 +13,6 @@ router.post('/applianceInformation', addApplianceInformation);
 router.get('/listApplianceInformation', listApplianceInformation);
 router.put('/updateApplianceInformation', updateApplianceInformation);
 router.delete('/deleteApplianceInformation', deleteApplianceInformation);
+router.post('/saveManual', saveManual);
 
 export default router;

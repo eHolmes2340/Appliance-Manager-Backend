@@ -16,4 +16,6 @@ router.post('/userProfileInformation', getUserProfileInformation);
 
 router.put('/updateUserProfile', updateUserProfile);
 
+
+
 export default router;
