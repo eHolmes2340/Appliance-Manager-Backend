@@ -17,7 +17,9 @@ startDownload();
 const app = express();
 
 // Network configuration
-const localhost = '10.0.0.215'; 
+//google cloud 
+//const ipAddress='0.0.0.0'; 
+const ipAddress = '10.0.0.215'; 
 const PORT = 3000;
 
 app.use(cors());
@@ -30,8 +32,8 @@ app.use('/api', recallRoutes);
 app.use('/api', notificationRoutes);
 
 // Listen for requests on the defined port
-const server = app.listen(PORT, localhost, () => {
-  console.log(`Server running on http://${localhost}:${PORT}`);
+const server = app.listen(PORT, ipAddress, () => {
+  console.log(`Server running on http://${ipAddress}:${PORT}`);
 });
 
 // Command-line interface setup
