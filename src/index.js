@@ -1,44 +1,24 @@
-// File     : index.js
-//Programmer: Erik Holmes
-
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import fs from 'fs';
 import path from 'path';
+import readline from 'readline'; // Import readline module
 
 import db from './model/db.js'; // Import the db variable
 import userRoutes from './routes/userRoutes.js'; // Import user routes
 import applianceRoutes from './routes/applianceRoutes.js'; // Import appliance routes
 import recallRoutes from './routes/recallRoutes.js'; // Import recall routes
-import {startDownload} from './common/downloadCSV.js'; // Import the startDownload function
+import { startDownload } from './common/downloadCSV.js'; // Import the startDownload function
+import notificationRoutes from './routes/notificationRoutes.js'; // Import notification routes
 
 startDownload(); 
-//Local host
-//This is for cloud 
-//Port number = 8080 
-//const localhost = '0.0.0.0';
-
- 
-//startDownload(); 
 
 const app = express();
-//Google cloud
-// const PORT = 8080; // Localhost
-//const localhost='0.0.0.0'
 
-//Network IP
-//Home
-const localhost='10.0.0.215'; 
-
-
-//Dads house 
-//const localhost='0.0.0.0'; 
-
-//Conenstoga college IP 
-// const localhost='10.144.120.196'; 
-
-const PORT=3000;
+// Network configuration
+const localhost = '10.0.0.215'; 
+const PORT = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -46,13 +26,36 @@ app.use(bodyParser.json());
 // Use the imported routes
 app.use('/api', userRoutes);
 app.use('/api', applianceRoutes);
-app.use('/api',recallRoutes)
+app.use('/api', recallRoutes);
+app.use('/api', notificationRoutes);
 
-
-//Listen for request on port 8000 
+// Listen for requests on the defined port
 const server = app.listen(PORT, localhost, () => {
   console.log(`Server running on http://${localhost}:${PORT}`);
 });
+
+// Command-line interface setup
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+// Function to reload the .csv file
+const reloadCSVFile = () => {
+  console.log('Reloading CSV file...');
+  startDownload(); // This is assuming startDownload triggers a reload of the CSV file
+  console.log('CSV file reloaded successfully.');
+};
+
+// Listen for 'update list' command
+rl.on('line', (input) => {
+  if (input === 'update list') {
+    reloadCSVFile(); // Reload CSV file when command is entered 
+    console.log('Command "update list" executed.');
+  }
+});
+
+// Graceful shutdown
 const shutdown = () => {
   console.log('\nShutting down gracefully...');
   
@@ -108,9 +111,6 @@ const shutdown = () => {
   });
 };
 
-
-
 // Handle termination signals
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
-
