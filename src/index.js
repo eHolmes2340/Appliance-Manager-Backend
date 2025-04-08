@@ -18,7 +18,7 @@ const app = express();
 
 // Network configuration
 //google cloud 
-const ipAddress='0.0.0.0'; 
+const ipAddress='35.232.28.84'; 
 //const ipAddress = '10.0.0.215'; 
 const PORT = 3000;
 
