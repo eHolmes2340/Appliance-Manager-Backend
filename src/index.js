@@ -37,25 +37,25 @@ const server = app.listen(PORT, ipAddress, () => {
 });
 
 // Command-line interface setup
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout
+// });
 
 // Function to reload the .csv file
-const reloadCSVFile = () => {
-  console.log('Reloading CSV file...');
-  startDownload(); // This is assuming startDownload triggers a reload of the CSV file
-  console.log('CSV file reloaded successfully.');
-};
+// const reloadCSVFile = () => {
+//   console.log('Reloading CSV file...');
+//   startDownload(); // This is assuming startDownload triggers a reload of the CSV file
+//   console.log('CSV file reloaded successfully.');
+//};
 
 // Listen for 'update list' command
-rl.on('line', (input) => {
-  if (input === 'update list') {
-    reloadCSVFile(); // Reload CSV file when command is entered 
-    console.log('Command "update list" executed.');
-  }
-});
+// rl.on('line', (input) => {
+//   if (input === 'update list') {
+//     reloadCSVFile(); // Reload CSV file when command is entered 
+//     console.log('Command "update list" executed.');
+//   }
+// });
 
 // Graceful shutdown
 const shutdown = () => {
